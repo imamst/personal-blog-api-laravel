@@ -19,13 +19,15 @@ class CreateCommentsTable extends Migration
             $table->string('author');
             $table->string('author_email');
             $table->text('content');
-            $table->foreignId('article_id');
+            $table->foreignId('post_id');
             $table->datetime('time');
             $table->unsignedBigInteger('parent_id');
-            $table->tinyInteger('is_approved')->default(0);
+            $table->tinyInteger('is_approved')->default(1);
             $table->timestamps();
 
             $table->foreign('parent_id')->references('id')->on('comments');
+
+            $table->index(['post_id', 'is_approved']);
         });
     }
 
