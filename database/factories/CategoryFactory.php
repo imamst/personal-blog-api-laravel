@@ -14,11 +14,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->word(rand(1,2), true);
+         $name = $this->faker->word(rand(1,2), true);
 
         return [
             'name' => Str::title($name),
-            'slug' => Str::slug($name)
+            'slug' =>  Str::slug($name).'-'.rand(111, 999)
         ];
     }
 }
