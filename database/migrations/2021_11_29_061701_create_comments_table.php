@@ -21,7 +21,7 @@ class CreateCommentsTable extends Migration
             $table->text('content');
             $table->foreignId('post_id');
             $table->datetime('time');
-            $table->unsignedBigInteger('parent_id');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->tinyInteger('is_approved')->default(1);
             $table->timestamps();
 

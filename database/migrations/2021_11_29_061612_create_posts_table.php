@@ -22,7 +22,7 @@ class CreatePostsTable extends Migration
             $table->text('featured_img')->nullable();
             $table->string('excerpt');
             $table->text('content');
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(2);
             $table->tinyInteger('post_type')->default(1);
             $table->tinyInteger('comment_status')->default(2);
             $table->integer('comment_count')->default(0);
