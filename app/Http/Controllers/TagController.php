@@ -4,78 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Http\Resources\TagResource;
-use Illuminate\Http\Request;
+use App\Http\Requests\TagFormRequest;
+use Validator;
+use DB;
 
 class TagController extends Controller
 {
     public function index()
     {
-        return TagResource::collection(Tag::all());
+        return TagResource::collection(Tag::select('id','name')->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(TagFormRequest $request)
     {
-        //
+        Tag::create($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'code' => 201,
+            'message' => 'resource created successfully'
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
     public function show(Tag $tag)
     {
-        //
+        return new TagResource($tag);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tag $tag)
+    public function update(TagFormRequest $request, Tag $tag)
     {
-        //
+        $tag->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'code' => 204,
+            'message' => 'resource updated successfully'
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tag  $tag
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Tag $tag)
     {
-        //
+        DB::table('post_tag')->where('tag_id',$tag->id)->delete();
+        $tag->delete();
+
+        return response()->json([
+            'success' => true,
+            'code' => 204,
+            'message' => 'resource deleted successfully'
+        ]);
     }
 }

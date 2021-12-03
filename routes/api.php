@@ -3,9 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\{
-    UserController,
-    UserStatusController
+use App\Http\Controllers\{
+    Admin\UserController,
+    Admin\UserStatusController,
+    TagController,
 };
 
 /*
@@ -28,3 +29,5 @@ Route::prefix('admin')->group(function() {
     Route::patch('users/{user}/suspend', [UserStatusController::class, 'suspend']);
     Route::patch('users/{user}/unsuspend', [UserStatusController::class, 'unsuspend']);
 });
+
+Route::apiResource('tags', TagController::class);
