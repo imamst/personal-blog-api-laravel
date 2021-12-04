@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Http\Resources\TagResource;
 use App\Http\Requests\TagFormRequest;
-use Validator;
 use DB;
 
 class TagController extends Controller

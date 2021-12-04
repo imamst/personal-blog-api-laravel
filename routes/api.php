@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     Admin\UserController,
     Admin\UserStatusController,
     TagController,
+    CategoryController
 };
 
 /*
@@ -31,3 +32,4 @@ Route::prefix('admin')->group(function() {
 });
 
 Route::apiResource('tags', TagController::class);
+Route::apiResource('categories', CategoryController::class);

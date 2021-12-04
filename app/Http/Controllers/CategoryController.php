@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Http\Resources\CategoryResource;
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoryFormRequest;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -13,69 +14,42 @@ class CategoryController extends Controller
         return CategoryResource::collection(Category::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(CategoryFormRequest $request)
     {
-        //
+        Category::create($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'code' => 201,
+            'message' => 'resource created successfully'
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function show(Category $category)
     {
-        //
+        return new CategoryResource($category);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function update(CategoryFormRequest $request, Category $category)
     {
-        //
+        $category->update($request->validated());
+
+        return response()->json([
+            'success' => true,
+            'code' => 204,
+            'message' => 'resource updated successfully'
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
-        //
+        DB::table('category_post')->where('category_id',$category->id)->delete();
+        $category->delete();
+
+        return response()->json([
+            'success' => true,
+            'code' => 204,
+            'message' => 'resource deleted successfully'
+        ]);
     }
 }
