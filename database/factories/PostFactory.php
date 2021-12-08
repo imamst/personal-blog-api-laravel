@@ -25,14 +25,14 @@ class PostFactory extends Factory
         return [
             'title' => Str::title($title),
             'slug' => Str::slug($title).'-'.rand(111,999),
-            'date' => '2021-'.$this->faker->numberBetween(9,11).'-'.$this->faker->numberBetween(1,30),
+            'published_date' => '2021-'.$this->faker->numberBetween(9,11).'-'.$this->faker->numberBetween(1,30),
             'featured_img' => $this->faker->imageUrl(),
             'excerpt' => $this->faker->text(200),
             'content' => $content,
             'status' => Post::STATUS_PUBLISHED,
             'post_type' => Post::TYPE_POST,
             'comment_status' => Post::COMMENT_OPENED,
-            'comment_count' => 0
+            'comments_count' => 0
         ];
     }
 }

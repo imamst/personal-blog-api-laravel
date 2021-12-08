@@ -17,7 +17,7 @@ class CommentFactory extends Factory
         $author = $this->faker->name;
 
         return [
-            'author' => $author,
+            'author_name' => $author,
             'author_email' => $author.'@example.com',
             'content' => $this->faker->sentence(6,true),
             'time' => $this->faker->dateTimeBetween('-2 weeks', 'now'),

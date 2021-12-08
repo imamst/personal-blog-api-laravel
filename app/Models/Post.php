@@ -27,6 +27,26 @@ class Post extends Model
         'comment_count' => 'integer'
     ];
 
+    public function scopeContent($query)
+    {
+        $query->select('id','user_id','author_name','title','slug','published_date','featured_img','excerpt','content','comment_count','status','updated_at');
+    }
+
+    public function scopeType($query, $type)
+    {
+        $query->where('post_type', $type);
+    }
+
+    public function scopePublished($query, $type)
+    {
+        $query->where('status',$this->STATUS_PUBLISHED);
+    }
+
+    public function scopeFromAuthor($query, $author_name)
+    {
+        $query->where('author_name', $author_name);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

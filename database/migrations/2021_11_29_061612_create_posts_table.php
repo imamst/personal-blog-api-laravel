@@ -16,16 +16,17 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->string('author_name');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->date('date');
+            $table->date('published_date')->nullable();
             $table->text('featured_img')->nullable();
             $table->string('excerpt');
             $table->text('content');
             $table->tinyInteger('status')->default(2);
             $table->tinyInteger('post_type')->default(1);
             $table->tinyInteger('comment_status')->default(2);
-            $table->integer('comment_count')->default(0);
+            $table->integer('comments_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
 

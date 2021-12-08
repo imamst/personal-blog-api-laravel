@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TagFormRequest extends FormRequest
+class CommentFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class TagFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'slug' => 'required|unique:tags|max:255',
-            'description' => 'nullable|max:255'
+            'author' => ['string','max:255'],
+            'author_email' => ['email'],
+            'content' => ['required']
         ];
     }
 }

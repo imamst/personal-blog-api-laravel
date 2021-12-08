@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return CategoryResource::collection(Category::all());
+        return CategoryResource::collection(Category::orderBy('name')->paginate(20));
     }
 
     public function store(CategoryFormRequest $request)
@@ -43,7 +43,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        DB::table('category_post')->where('category_id',$category->id)->delete();
+        $category->posts()->detach();
         $category->delete();
 
         return response()->json([

@@ -11,7 +11,7 @@ class TagController extends Controller
 {
     public function index()
     {
-        return TagResource::collection(Tag::select('id','name')->get());
+        return TagResource::collection(Tag::orderBy('name')->paginate(20));
     }
 
     public function store(TagFormRequest $request)
@@ -43,7 +43,7 @@ class TagController extends Controller
 
     public function destroy(Tag $tag)
     {
-        DB::table('post_tag')->where('tag_id',$tag->id)->delete();
+        $tag->posts()->detach();
         $tag->delete();
 
         return response()->json([

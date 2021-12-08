@@ -14,9 +14,19 @@ class Comment extends Model
     const REJECTED = 3;
 
     protected $casts = [
-        'time' => 'datetime',
+        'time' => 'datetime', // is needed?
         'is_approved' => 'integer'
     ];
+
+    public function scopeContent($query)
+    {
+        $query->select('id','user_id','author','author_email','content','created_at','parent_id','is_approved');
+    }
+
+    public function scopeApproved($query)
+    {
+        $query->where('is_approved', $this->APPROVED);
+    }
 
     public function post()
     {
