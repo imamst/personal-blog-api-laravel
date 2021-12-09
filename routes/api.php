@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     Guest\TagListController,
     Guest\CategoryListController,
     AuthController,
+    TokenController,
     TagController,
     CategoryController,
     PostController
@@ -32,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/clear/token', [TokenController::class, 'clear']);
 });
 
 // Admin
