@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CommentResource;
+use App\Models\Role;
 
 class PostResource extends JsonResource
 {
@@ -18,10 +19,7 @@ class PostResource extends JsonResource
         return [
             $this->merge(parent::toArray($request)),
 
-            'comments' => CommentResource::collection($this->whenLoaded('comments', 
-                fn() => object_get($this->comments->where('is_approved', 2)->sortByDesc('created_at')->all(), 'value')
-            ))
-            
+            'comments' => CommentResource::collection($this->whenLoaded('comments'))
         ];
     }
 }

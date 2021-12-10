@@ -22,6 +22,8 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return new PostResource($post);
+        return new PostResource($post->load([
+            'comments' => fn($query) => $query->where('is_approved', 1)
+        ]));
     }
 }
