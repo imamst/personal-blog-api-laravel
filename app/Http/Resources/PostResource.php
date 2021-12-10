@@ -16,9 +16,12 @@ class PostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'comments' => CommentResource::collection($this->comments()->content()->approved()->latest()),
+            $this->merge(parent::toArray($request)),
+
+            'comments' => CommentResource::collection($this->whenLoaded('comments', 
+                fn() => object_get($this->comments->where('is_approved', 2)->sortByDesc('created_at')->all(), 'value')
+            ))
             
-            $this->merge(parent::toArray($request))
         ];
     }
 }

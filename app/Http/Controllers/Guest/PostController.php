@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostCollection;
@@ -12,7 +13,7 @@ class PostController extends Controller
     public function index()
     {
         return new PostCollection(Post::content()
-                                    ->with(['users','tags','categories'])
+                                    ->with(['categories:id,name,slug'])
                                     ->type(Post::TYPE_POST)
                                     ->published()
                                     ->latest('published_date')

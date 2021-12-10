@@ -20,7 +20,7 @@ class Comment extends Model
 
     public function scopeContent($query)
     {
-        $query->select('id','user_id','author','author_email','content','created_at','parent_id','is_approved');
+        $query->select('id','user_id','author_name','author_email','content','created_at','parent_id','is_approved');
     }
 
     public function scopeApproved($query)

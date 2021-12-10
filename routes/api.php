@@ -8,11 +8,11 @@ use App\Http\Controllers\{
     Admin\UserStatusController,
     Guest\TagListController,
     Guest\CategoryListController,
+    Guest\PostController,
     AuthController,
     TokenController,
     TagController,
     CategoryController,
-    PostController
 };
 
 /*
