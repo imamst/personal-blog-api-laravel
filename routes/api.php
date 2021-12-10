@@ -29,28 +29,32 @@ use App\Http\Controllers\{
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::middleware('auth:sanctum')->group(function() {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-    Route::post('/clear/token', [TokenController::class, 'clear']);
-});
-
-// Admin
-Route::apiResource('/users', UserController::class)->only(['index', 'show']);
-Route::patch('/users/{user}/suspend', [UserStatusController::class, 'suspend']);
-Route::patch('/users/{user}/unsuspend', [UserStatusController::class, 'unsuspend']);
-
-// Author
-
-// Author & Admin
-Route::apiResource('/tags', TagController::class);
-Route::apiResource('/categories', CategoryController::class);
-
 Route::prefix('/public')->group(function() {
     // Guest
     Route::get('/tags', TagListController::class);
     Route::get('/categories', CategoryListController::class);
     Route::get('/posts', [PostController::class, 'index']);
     Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+});
+
+// Author & Admin
+Route::middleware('auth:sanctum')->group(function() {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+    Route::post('/clear/token', [TokenController::class, 'clear']);
+    Route::apiResource('/tags', TagController::class);
+    Route::apiResource('/categories', CategoryController::class);
+});
+
+Route::middleware(['auth:sanctum', 'ability:admin'])->group(function() {
+    // Admin
+    Route::apiResource('/users', UserController::class)->only(['index', 'show']);
+    Route::patch('/users/{user}/suspend', [UserStatusController::class, 'suspend']);
+    Route::patch('/users/{user}/unsuspend', [UserStatusController::class, 'unsuspend']);
+});
+
+// Author
+Route::middleware(['auth:sanctum', 'ability:author'])->group(function() {
+
 });
