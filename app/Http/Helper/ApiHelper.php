@@ -33,12 +33,11 @@ trait ApiHelper
         ], $code);
     }
 
-    protected function onError($error = null, string $message = '', int $code = 500): JsonResponse
+    protected function onError(string $message = '', int $code = 500): JsonResponse
     {
         return response()->json([
             'status' => $code,
-            'message' => $message,
-            'error' => $error
+            'message' => $message
         ], $code);
     }
 
