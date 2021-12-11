@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     Guest\TagListController,
     Guest\CategoryListController,
     Guest\PostController,
+    Guest\PostFilterController,
     AuthController,
     TokenController,
     TagController,
@@ -35,6 +36,11 @@ Route::prefix('/public')->group(function() {
     Route::get('/categories', CategoryListController::class);
     Route::get('/posts', [PostController::class, 'index']);
     Route::get('/posts/{post:slug}', [PostController::class, 'show']);
+    Route::get('tags/{tag}/posts', [PostFilterController::class, 'indexByTag']);
+    Route::get('categories/{category}/posts', [PostFilterController::class, 'indexByCategory']);
+    Route::get('authors/{author}/posts', [PostFilterController::class, 'indexByAuthor']);
+    Route::get('{year}/{month}/posts', [PostFilterController::class, 'indexByMonthAndYear']);
+    Route::get('search/posts', [PostFilterController::class, 'search']);
 });
 
 // Author & Admin
