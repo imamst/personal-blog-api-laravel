@@ -19,7 +19,7 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()) {
-            return response()->json($validator->errors());
+            return $this->onError($validator->errors(), '', 400);
         }
 
         $validated = $validator->validated();

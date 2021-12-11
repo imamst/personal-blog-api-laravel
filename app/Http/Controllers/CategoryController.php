@@ -6,9 +6,12 @@ use App\Models\Category;
 use App\Http\Resources\CategoryResource;
 use App\Http\Requests\CategoryFormRequest;
 use DB;
+use App\Http\Helper\ApiHelper;
 
 class CategoryController extends Controller
 {
+    use ApiHelper;
+
     public function index()
     {
         return CategoryResource::collection(Category::orderBy('name')->paginate(20));
@@ -16,13 +19,9 @@ class CategoryController extends Controller
 
     public function store(CategoryFormRequest $request)
     {
-        Category::create($request->validated());
+        $category = Category::create($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'code' => 201,
-            'message' => 'resource created successfully'
-        ]);
+        return $this->onSuccess($category, 'Category created successfully', 201);
     }
 
     public function show(Category $category)
@@ -34,11 +33,7 @@ class CategoryController extends Controller
     {
         $category->update($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'code' => 204,
-            'message' => 'resource updated successfully'
-        ]);
+        return $this->onSuccess($category, 'Category updated successfully');
     }
 
     public function destroy(Category $category)
@@ -46,10 +41,6 @@ class CategoryController extends Controller
         $category->posts()->detach();
         $category->delete();
 
-        return response()->json([
-            'success' => true,
-            'code' => 204,
-            'message' => 'resource deleted successfully'
-        ]);
+        return $this->onSuccess(null, 'Category deleted successfully');
     }
 }

@@ -6,9 +6,12 @@ use App\Models\Tag;
 use App\Http\Resources\TagResource;
 use App\Http\Requests\TagFormRequest;
 use DB;
+use App\Http\Helper\ApiHelper;
 
 class TagController extends Controller
 {
+    use ApiHelper;
+
     public function index()
     {
         return TagResource::collection(Tag::orderBy('name')->paginate(20));
@@ -16,13 +19,9 @@ class TagController extends Controller
 
     public function store(TagFormRequest $request)
     {
-        Tag::create($request->validated());
+        $tag = Tag::create($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'code' => 201,
-            'message' => 'resource created successfully'
-        ]);
+        return $this->onSuccess($tag, 'Tag created successfully', 201);
     }
 
     public function show(Tag $tag)
@@ -34,11 +33,7 @@ class TagController extends Controller
     {
         $tag->update($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'code' => 204,
-            'message' => 'resource updated successfully'
-        ]);
+        return $this->onSuccess($tag, 'Tag updated successfully');
     }
 
     public function destroy(Tag $tag)
@@ -46,10 +41,6 @@ class TagController extends Controller
         $tag->posts()->detach();
         $tag->delete();
 
-        return response()->json([
-            'success' => true,
-            'code' => 204,
-            'message' => 'resource deleted successfully'
-        ]);
+        return $this->onSuccess(null, 'Tag deleted successfully');
     }
 }
