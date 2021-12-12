@@ -21,7 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('slug')->unique();
             $table->date('published_date')->nullable();
             $table->text('featured_img')->nullable();
-            $table->string('excerpt');
+            $table->text('excerpt');
             $table->text('content');
             $table->tinyInteger('status')->default(2);
             $table->tinyInteger('post_type')->default(1);

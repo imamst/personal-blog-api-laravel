@@ -20,12 +20,17 @@ class Post extends Model
     const COMMENT_OPENED = 2;
 
     protected $casts = [
-        'date' => 'date',
+        'published_date' => 'date',
         'status' => 'integer',
         'post_type' => 'integer',
         'comment_status' => 'integer',
         'comments_count' => 'integer'
     ];
+
+    public function setExcerptAttribute($value)
+    {
+        $this->attributes['excerpt'] = implode(' ', array_slice(explode(' ', $value, 0, 55)));
+    }
 
     public function scopeContent($query)
     {
