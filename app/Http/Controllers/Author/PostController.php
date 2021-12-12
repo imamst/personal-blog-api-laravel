@@ -63,8 +63,8 @@ class PostController extends Controller
         ]);
 
         $post->update($data);
-        $post->tags()->sync($request->input('tag[]'));
-        $post->categories()->sync($request->input('category[]'));
+        $post->tags()->sync($request->input('tag'));
+        $post->categories()->sync($request->input('category'));
 
         return $this->onSuccess($post, 'Post updated successfully');
     }
