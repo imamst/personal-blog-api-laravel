@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     Admin\UserController,
     Admin\UserStatusController,
+    Author\PostController as AuthorPostController,
     Guest\TagListController,
     Guest\CategoryListController,
     Guest\PostController,
@@ -62,5 +63,5 @@ Route::middleware(['auth:sanctum', 'ability:admin'])->group(function() {
 
 // Author
 Route::middleware(['auth:sanctum', 'ability:author'])->group(function() {
-
+    Route::apiResource('posts', AuthorPostController::class);
 });
