@@ -38,10 +38,10 @@ class PostController extends Controller
         ]);
         $post = $user->posts()->create($data);
 
-        $post->tags()->attach($request->input('tag[]'));
-        $post->categories()->attach($request->input('category[]'));
+        $post->tags()->attach($request->input('tag'));
+        $post->categories()->attach($request->input('category'));
 
-        return $this->onSuccess($request, 'Post created successfully');
+        return $this->onSuccess($post, 'Post created successfully');
     }
 
     public function show(Post $post)

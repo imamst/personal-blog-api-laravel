@@ -29,7 +29,7 @@ class Post extends Model
 
     public function setExcerptAttribute($value)
     {
-        $this->attributes['excerpt'] = implode(' ', array_slice(explode(' ', $value, 0, 55)));
+        $this->attributes['excerpt'] = implode(' ', array_slice(explode(' ', $value), 0, 55));
     }
 
     public function scopeContent($query)

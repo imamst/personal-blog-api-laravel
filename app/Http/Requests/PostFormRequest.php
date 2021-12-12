@@ -28,7 +28,9 @@ class PostFormRequest extends FormRequest
             'slug' => ['required', 'unique:posts', 'max:255'],
             'published_date' => ['nullable', 'date'],
             'featured_img' => ['nullable','file','max:5000','mimes:jpg,jpeg,png'],
-            'content' => ['required','string']
+            'content' => ['required','string'],
+            'tag[]' => ['nullable'],
+            'category[]' => ['nullable']
         ];
     }
 }
