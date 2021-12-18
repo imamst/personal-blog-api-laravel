@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create()->each(function($user) use($tags, $categories) {
             Post::factory(3)->create([
                 'user_id' => $user->id,
-                'author_name' => $user->name
+                'author_name' => $user->name,
+                'comments_count' => 2
             ])->each(function($post) use($tags, $categories) {
                 $post->tags()->attach($tags->random(2));
                 $post->categories()->attach($categories->random());
