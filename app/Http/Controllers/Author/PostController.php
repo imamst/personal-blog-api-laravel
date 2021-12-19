@@ -25,6 +25,16 @@ class PostController extends Controller
 
     public function store(PostFormRequest $request)
     {
+        return $this->savePost($request, Post::STATUS_PUBLISHED);
+    }
+
+    public function storeAsDraft(PostFormRequest $request)
+    {
+        return $this->savePost($request, Post::STATUS_DRAFT);
+    }
+
+    private function savePost(PostFormRequest $request, $status)
+    {
         $user = request()->user();
 
         if($request->hasFile('featured_img')){
@@ -34,7 +44,8 @@ class PostController extends Controller
         $data = array_merge($request->validated(), [
             'author_name' => $user->name,
             'excerpt' => $request->input('content'),
-            'featured_img' => $path ?? null
+            'featured_img' => $path ?? null,
+            'status' => $status
         ]);
         $post = $user->posts()->create($data);
 

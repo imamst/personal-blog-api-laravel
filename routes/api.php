@@ -64,4 +64,5 @@ Route::middleware(['auth:sanctum', 'ability:admin'])->group(function() {
 // Author
 Route::middleware(['auth:sanctum', 'ability:author'])->group(function() {
     Route::apiResource('posts', AuthorPostController::class);
+    Route::post('posts/draft', [AuthorPostController::class, 'storeAsDraft']);
 });
