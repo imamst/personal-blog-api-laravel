@@ -34,7 +34,7 @@ class Post extends Model
 
     public function getFeaturedImgAttribute($value)
     {
-        return asset($value);
+        return str_contains($value, 'http') ? $value : asset('storage/'.$value);
     }
 
     public function scopeContent($query)
