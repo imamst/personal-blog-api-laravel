@@ -32,6 +32,11 @@ class Post extends Model
         $this->attributes['excerpt'] = implode(' ', array_slice(explode(' ', $value), 0, 55));
     }
 
+    public function getFeaturedImgAttribute($value)
+    {
+        return asset($value);
+    }
+
     public function scopeContent($query)
     {
         return $query->select('id','user_id','author_name','title','slug','published_date','featured_img','excerpt','content','comments_count','status','updated_at');
